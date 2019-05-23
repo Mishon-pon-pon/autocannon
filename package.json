@@ -1,0 +1,14 @@
+{
+  "name": "multicannon",
+  "version": "0.0.1",
+  "description": "multicannon url",
+  "main": "multiCannon.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mishon-pon-pon",
+  "license": "ISC",
+  "dependencies": {
+    "autocannon": "^3.2.2"
+  }
+}
