@@ -4,20 +4,16 @@ const autocannon = require('autocannon');
 let http = require('http');
 let https = require('https');
 
-module.exports = async function loadTest(ArrayTarget, auth, isHttps) {
-    http = isHttps == 'https' ? https : http;
+module.exports = async function loadTest(ArrayTarget, auth) {
     let Cookie;
     let GPromise;
-    
     for (let i = 0, counterTests = 1; i < ArrayTarget.length; i++) {
+        let xhttp = ArrayTarget[i].url.substr(0, 5) == 'https' ? https : http;
         await new Promise(resolve => {
-            const req = http.request(ArrayTarget[0].url, {
+            const req = xhttp.request(ArrayTarget[i].url, {
                 method: 'POST',
                 auth: auth
             }, (res) => {
-                // console.log(`STATUS: ${res.statusCode}`);
-                // console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
-                // console.log('Coockie: ' + res.headers['set-cookie']);
                 Cookie = res.headers['set-cookie'];
                 res.on('end', () => {
                     console.log('No more data in response.');
@@ -28,6 +24,7 @@ module.exports = async function loadTest(ArrayTarget, auth, isHttps) {
         });
         ArrayTarget[i].headers = { cookie: Cookie };
         let instance = autocannon(typeof ArrayTarget[i] == 'object' ? ArrayTarget[i] : { url: ArrayTarget[i] }, (err, result) => { })
+
         instance.on('start', () => {
             console.log('start load test # ' + counterTests);
             console.log('cookie: ' + Cookie);

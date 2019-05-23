@@ -12,7 +12,7 @@ multicannon = require('multicannon');
 
 ## API
 
-### multicannon(opts, auth, protocol)
+### multicannon(opts, auth)
 
 Start multicannon against the given target.
 
@@ -41,7 +41,6 @@ Start multicannon against the given target.
     * `servername`: A `String` identifying the server name for the SNI (Server Name Indication) TLS extension. _OPTIONAL_ default: `undefined`.
     * `excludeErrorStats`: A `Boolean` which allows you to disable tracking non 2xx code responses in latency and bytes per second calculations. _OPTIONAL_ default: `false`.
 * `auth`: authorization 'login:pass'
-* `protocol`: 'http' or 'https'
 
 
 Example that just prints the table of results on completion:
@@ -64,5 +63,5 @@ const URLArr = [
 
 
 
-multicannon(URLArr, 'login:pass', 'http');
+multicannon(URLArr, 'login:pass');
 ```
